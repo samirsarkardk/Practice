@@ -10,7 +10,7 @@ class Config:
         torch.manual_seed(self.seed)
 
         # Training parameters
-        self.num_epochs = 1500
+        self.num_epochs = 15000
         self.learning_rate = 0.001
 
         # Model parameters

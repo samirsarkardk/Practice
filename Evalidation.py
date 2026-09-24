@@ -6,7 +6,7 @@ import os
 import matplotlib.pyplot as plt
 
 N = 5000
-t_value = torch.tensor(0.25)
+t_value = torch.tensor(0.005)
 
 config = Config()
 
@@ -76,7 +76,7 @@ N1 = 5000
 # Create 5000 x-points from x_min to x_max
 x_test = torch.linspace(x_min, x_max, N1).reshape(-1, 1).to(DEVICE)
 
-# Create a t-column where every value is 0.25
+# Create a t-column where every value is 0.75
 t_test = torch.full_like(x_test, t_value).to(DEVICE)
 
 # PINN prediction
