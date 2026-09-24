@@ -1,9 +1,8 @@
 import numpy as np
 import torch
 from Aconfig import (Config, DEVICE)
-from Bmodel import (PINN1, PINN2)
+from Bmodel import (PINN1, PINN2, PINN3)
 import os
-from Dmain import CombinedModel
 import matplotlib.pyplot as plt
 
 N = 5000
@@ -13,11 +12,12 @@ config = Config()
 
 model1 = PINN1().to(DEVICE)
 model2 = PINN2().to(DEVICE)
-model3 = CombinedModel(model1, model2).to(DEVICE)
+model3 = PINN3().to(DEVICE)
 
 
 model1.load_state_dict(torch.load("model1.pth", map_location=DEVICE))
 model2.load_state_dict(torch.load("model2.pth", map_location=DEVICE))
+model3.load_state_dict(torch.load("model3.pth", map_location=DEVICE))
 
 model1.eval()
 model2.eval()

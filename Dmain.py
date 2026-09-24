@@ -1,23 +1,11 @@
 from Cdomain import (subdomain3, subdomain2, subdomain1)
 from Aconfig import (DEVICE, Config)
-from Bmodel import (PINN1, PINN2)
+from Bmodel import (PINN1, PINN2, PINN3)
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
 import torch.nn as nn
 
-class CombinedModel(nn.Module):
-    def __init__(self, model1, model2):
-        super().__init__()
-        self.model1 = model1
-        self.model2 = model2
-        
-
-    def forward(self, x, t):
-        return (
-            0.25 * self.model1(x, t) +
-            0.25 * self.model2(x, t) 
-        )
 
 
 
@@ -38,7 +26,7 @@ t_mid.to(DEVICE)
 model1 = PINN1().to(DEVICE)
 model2 = PINN2().to(DEVICE)
 
-model3 = CombinedModel(model1, model2).to(DEVICE)
+model3 = PINN3().to(DEVICE)
 
 
 N = 7500
@@ -212,9 +200,7 @@ for epoch in range(config.num_epochs):
     loss2.backward()
     optimizer2.step()
     
-
-    optimizer1.zero_grad()
-    optimizer2.zero_grad()
+    optimizer3.zero_grad()
     loss3 = Subdomain3Loss()
     loss3.backward()
     optimizer3.step()
@@ -230,4 +216,5 @@ print("Training finished")
 
 torch.save(model1.state_dict(), "model1.pth")
 torch.save(model2.state_dict(), "model2.pth")
+torch.save(model3.state_dict(), "model3.pth")
 
